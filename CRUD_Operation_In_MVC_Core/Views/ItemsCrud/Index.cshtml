@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("body").on('click', '#ed1', function () {
+            //alert("OK");
+            $("#t1").val($(this).closest('tr').children(":nth-child(1)").html());
+            $("#t2").val($(this).closest('tr').children(":nth-child(2)").html());
+            $("#t3").val($(this).closest('tr').children(":nth-child(3)").html());
+        })
+        function blank() {
+            $("#t1").val("");
+            $("#t2").val("");
+            $("#t3").val("");
+        }
+        function refresh() {
+            $.ajax({
+                type: "get",
+                url: "http://localhost:21980/api/ItemsApi",
+                datatype: "json",
+                contenttype: "application/json",
+                success: function (data) {
+                    var s = "";
+                    for (var i = 0; i < data.length; i++) {
+                        s += "<tr>";
+                        s += "<td>" + data[i].itemcode + "</td>";
+                        s += "<td>" + data[i].itemname + "</td>";
+                        s += "<td>" + data[i].picture + "</td>";
+                        s += "<td>" + "<a href='#' class='btn btn-primary' id='ed1'>Edit</a>" + "</td>";
+                        s += "</tr>"
+                    }
+                    $("#student tbody").html(s);
+                },
+                error: function (xhr) {
+                    alert(xhr.responsetext);
+                }
+            });
+        }
+        refresh();
+        $("#b1").click(function () {
+            var productData = {
+                "itemcode": $("#t1").val(),
+                "itemname": $("#t2").val(),
+                "picture": $("#t3").val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:21980/api/ItemsApi",
+                data: JSON.stringify(productData),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    alert("Data Inserted Successfully");
+                    blank();
+                    refresh();
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                }
+            });
+        });
+        $("#b3").click(function () {
+            var productData = {
+                "itemcode": $("#t1").val(),
+                "itemname": $("#t2").val(),
+                "picture": $("#t3").val()
+            };
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost:21980/api/ItemsApi/" + $("#t1").val(),
+                data: JSON.stringify(productData),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    alert("Data Updated Successfully");
+                    blank();
+                    refresh();
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                }
+            });
+        });
+        $("#b2").click(function () {
+            var productData = {
+                "itemcode": $("#t1").val(),
+                "itemname": $("#t2").val(),
+                "picture": $("#t3").val()
+            };
+            $.ajax({
+                type: "DELETE",
+                url: "http://localhost:21980/api/ItemsApi/" + $("#t1").val(),
+                data: JSON.stringify(productData),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    alert("Data Deleted Successfully");
+                    blank();
+                    refresh();
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
+<div class="container">
+    <h2>Items CRUD</h2>
+    <div class="form-group">
+        <label for="t1" class="col-md-2">Item code:</label>
+        <div class="col-md-10">
+            <input type="text" id="t1" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="t2" class="col-md-2 content_padding">Item Name:</label>
+        <div class="col-md-10 content_padding">
+            <input type="text" id="t2" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="t3" class="col-md-2">Picture:</label>
+        <div class="col-md-10">
+            <input type="text" id="t3" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" id="b1" value="Add" class="btn btn-default" />
+            <input type="button" id="b2" value="Delete" class="btn btn-default" />
+            <input type="button" id="b3" value="Update" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+<hr />
+<table class="table table-striped table-responsive table-bordered table-condensed table-hover table" id="student">
+    <thead>
+        <tr>
+            <th>Item Code</th>
+            <th>Item Name</th>
+            <th>Picture</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+

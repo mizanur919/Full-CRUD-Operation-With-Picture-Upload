@@ -1,0 +1,49 @@
+﻿@model CRUD_Operation_In_MVC_Core.Model.Db.Examresult
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Examresult</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Examname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Examname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Institution)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Institution)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Board)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Board)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Result)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Result)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Student)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Student.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

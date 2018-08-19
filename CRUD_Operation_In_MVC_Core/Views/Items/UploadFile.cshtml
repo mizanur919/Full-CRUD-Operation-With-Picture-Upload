@@ -1,0 +1,36 @@
+﻿@model CRUD_Operation_In_MVC_Core.Model.Db.Items
+
+@{
+    ViewData["Title"] = "UploadFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UploadFile</h2>
+
+<div>
+    <h4>Items</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Itemname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Itemname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Picture)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Picture)
+        </dd>
+    </dl>
+</div>
+@using (Html.BeginForm("UploadFile", "items", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.TextBox("file", "", new { type = "file" }) <br />
+    <input type="submit" value="Upload" />
+}
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Itemcode">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
